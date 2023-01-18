@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    password: 658
+    url: jdbc:postgresql://localhost:5432/libKotlin
+    username: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+server:
+  port: 8080
