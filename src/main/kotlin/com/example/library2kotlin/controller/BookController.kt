@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/book")
 @Tag(name = "Книги", description = "API для работы с книгами")
-class BookController(val bookService: BookService) {
+class BookController(private val bookService: BookService) {
     @GetMapping("/{id}")
     @Operation(summary = "Получение книги по id", description = "Получение книги по id")
     fun getBookById(@PathVariable id: Long) = bookService.getBookById(id)
@@ -28,4 +28,8 @@ class BookController(val bookService: BookService) {
     @Operation(summary = "Удаление книги", description = "Удаление книги по id")
     fun deleteBook(@PathVariable id: Long): BookAuthorShortDTO = bookService.deleteBook(id)
 
+    @PutMapping("/{id}")
+    @Operation(summary = "Обновление книги", description = "Обновление книги по id")
+    fun updateBook(@PathVariable id: Long, @RequestBody newBookShortDTO: NewBookShortDTO) =
+        bookService.updateBook(id, newBookShortDTO)
 }

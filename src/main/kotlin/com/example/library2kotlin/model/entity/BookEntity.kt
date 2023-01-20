@@ -9,27 +9,20 @@ import javax.persistence.*
 data class BookEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long?,
+    var id: Long?,
     val title: String,
     val edition: String,
     val pageCount: Int,
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-
     var author: AuthorEntity?
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
         other as BookEntity
-
-        return id != null && id == other.id
+        return id == other.id
     }
 
     override fun hashCode(): Int = javaClass.hashCode()
-
-    @Override
-    override fun toString(): String {
-        return this::class.simpleName + "(id = $id )"
-    }
 }

@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component
 class AuthorMapper {
     companion object {
         fun entityToDto(authorEntity: AuthorEntity) = AuthorDTO(
-            authorEntity.id,
+            authorEntity.id!!,
             authorEntity.name,
             authorEntity.lastName,
             authorEntity.secondName,
             authorEntity.birthDate,
-            authorEntity.books.map { t -> BookMapper.entityToBookShortDto(t) }
+            authorEntity.books.map { BookMapper.entityToBookShortDto(it) }
                 .toSet()
         )
 

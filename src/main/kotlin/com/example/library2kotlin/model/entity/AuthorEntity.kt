@@ -8,7 +8,7 @@ import javax.persistence.*
 data class AuthorEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    val id: Long?,
+    var id: Long?,
     val name: String,
     val lastName: String,
     val secondName: String,
@@ -20,14 +20,8 @@ data class AuthorEntity(
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
         other as AuthorEntity
-
         return id != null && id == other.id
     }
 
     override fun hashCode(): Int = javaClass.hashCode()
-
-    @Override
-    override fun toString(): String {
-        return this::class.simpleName + "(id = $id )"
-    }
 }

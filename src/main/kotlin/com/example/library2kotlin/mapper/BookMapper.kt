@@ -22,6 +22,6 @@ class BookMapper {
             BookEntity(null, newBookShortDto.title, newBookShortDto.edition, newBookShortDto.pageCount, null)
 
         fun entityToBookShortDto(bookEntity: BookEntity) =
-            BookShortDTO(bookEntity.id, bookEntity.title, bookEntity.edition, bookEntity.pageCount)
+            BookShortDTO(bookEntity.id!!, bookEntity.title, bookEntity.edition, bookEntity.pageCount)
     }
 }
