@@ -2,6 +2,7 @@ package com.example.library2kotlin.mapper
 
 import com.example.library2kotlin.model.dto.author.AuthorDTO
 import com.example.library2kotlin.model.dto.author.AuthorShortDTO
+import com.example.library2kotlin.model.dto.author.AuthorUpdateDTO
 import com.example.library2kotlin.model.dto.author.NewAuthorDTO
 import com.example.library2kotlin.model.entity.AuthorEntity
 import org.springframework.stereotype.Component
@@ -34,6 +35,14 @@ class AuthorMapper {
             authorEntity.lastName,
             authorEntity.secondName,
             authorEntity.birthDate
+        )
+        fun updateDtoToEntity(authorUpdateDTO: AuthorUpdateDTO) = AuthorEntity(
+            id = null,
+            authorUpdateDTO.name,
+            authorUpdateDTO.secondName,
+            authorUpdateDTO.lastName,
+            authorUpdateDTO.birthDate,
+            books = emptySet()
         )
     }
 }

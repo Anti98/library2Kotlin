@@ -3,6 +3,7 @@ package com.example.library2kotlin.controller
 import com.example.library2kotlin.model.dto.book.BookAuthorShortDTO
 import com.example.library2kotlin.model.dto.book.BookListDTO
 import com.example.library2kotlin.model.dto.book.NewBookShortDTO
+import com.example.library2kotlin.model.dto.book.UpdateBookDTO
 import com.example.library2kotlin.service.BookService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -30,6 +31,6 @@ class BookController(private val bookService: BookService) {
 
     @PutMapping("/{id}")
     @Operation(summary = "Обновление книги", description = "Обновление книги по id")
-    fun updateBook(@PathVariable id: Long, @RequestBody newBookShortDTO: NewBookShortDTO) =
-        bookService.updateBook(id, newBookShortDTO)
+    fun updateBook(@PathVariable id: Long, @RequestBody updateBookDTO: UpdateBookDTO) =
+        bookService.updateBook(id, updateBookDTO)
 }

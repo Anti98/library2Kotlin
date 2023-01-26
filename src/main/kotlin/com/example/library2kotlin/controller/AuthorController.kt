@@ -2,6 +2,7 @@ package com.example.library2kotlin.controller
 
 import com.example.library2kotlin.model.dto.author.AuthorDTO
 import com.example.library2kotlin.model.dto.author.AuthorListDTO
+import com.example.library2kotlin.model.dto.author.AuthorUpdateDTO
 import com.example.library2kotlin.model.dto.author.NewAuthorDTO
 import com.example.library2kotlin.service.AuthorService
 import io.swagger.v3.oas.annotations.Operation
@@ -30,6 +31,6 @@ class AuthorController(private val authorService: AuthorService) {
 
     @PutMapping("/{id}")
     @Operation(summary = "Обновить автора", description = "Обновить автора по id")
-    fun updateById(@PathVariable id: Long, @RequestBody newAuthorDTO: NewAuthorDTO): AuthorDTO =
-        authorService.putAuthor(id, newAuthorDTO)
+    fun updateById(@PathVariable id: Long, @RequestBody authorUpdateDTO: AuthorUpdateDTO): AuthorDTO =
+        authorService.putAuthor(id, authorUpdateDTO)
 }

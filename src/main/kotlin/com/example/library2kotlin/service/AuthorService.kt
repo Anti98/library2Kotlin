@@ -4,11 +4,11 @@ import com.example.library2kotlin.exception.NoEntityException
 import com.example.library2kotlin.mapper.AuthorMapper
 import com.example.library2kotlin.model.dto.author.AuthorDTO
 import com.example.library2kotlin.model.dto.author.AuthorListDTO
+import com.example.library2kotlin.model.dto.author.AuthorUpdateDTO
 import com.example.library2kotlin.model.dto.author.NewAuthorDTO
 import com.example.library2kotlin.model.entity.AuthorEntity
 import com.example.library2kotlin.repository.AuthorRepository
 import org.springframework.stereotype.Service
-import java.util.stream.Collectors
 
 @Service
 class AuthorService(private val authorRepository: AuthorRepository) {
@@ -17,27 +17,26 @@ class AuthorService(private val authorRepository: AuthorRepository) {
             .let { AuthorMapper.entityToDto(it) }
 
     fun postAuthor(newAuthorDTO: NewAuthorDTO) =
-        authorRepository.save(AuthorMapper.postDtoToEntity(newAuthorDTO)).let { AuthorMapper.entityToDto(it) }
+        authorRepository.save(newAuthorDTO.let { AuthorMapper.postDtoToEntity(it) })
+            .let { AuthorMapper.entityToDto(it) }
 
     fun getAllAuthors() = AuthorListDTO(
-        authorRepository.findAll().stream()
-            .map(AuthorMapper::entityToDto)
-            .collect(Collectors.toList())
+        authorRepository.findAll().map(AuthorMapper::entityToDto)
     )
 
     fun deleteAuthorById(id: Long): AuthorDTO {
         val author = authorRepository.findById(id).orElseThrow { NoEntityException("No author with id=$id") }
         authorRepository.deleteById(id)
-        return AuthorMapper.entityToDto(author)
+        return author.let { AuthorMapper.entityToDto(it) }
     }
 
-    fun putAuthor(id: Long, newAuthorDTO: NewAuthorDTO): AuthorDTO {
+    fun putAuthor(id: Long, authorUpdateDTO: AuthorUpdateDTO): AuthorDTO {
         val authorOld: AuthorEntity =
             authorRepository.findById(id).orElseThrow { NoEntityException("No author with id=$id") }
-        val authorNew: AuthorEntity = AuthorMapper.postDtoToEntity(newAuthorDTO)
+        val authorNew: AuthorEntity = authorUpdateDTO.let { AuthorMapper.updateDtoToEntity(it) }
         authorNew.id = id
         authorNew.books = authorOld.books
-        return AuthorMapper.entityToDto(authorRepository.save(authorNew))
+        return authorRepository.save(authorNew).let { AuthorMapper.entityToDto(it) }
     }
 }
 
