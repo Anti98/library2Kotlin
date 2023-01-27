@@ -12,25 +12,36 @@ class BookMapper {
     companion object {
         fun entityToBookGetDto(bookEntity: BookEntity) =
             BookAuthorShortDTO(
-                bookEntity.id!!,
-                bookEntity.title,
-                bookEntity.edition,
-                bookEntity.pageCount,
-                AuthorMapper.entityToAuthorShortDto(bookEntity.author!!)
+                id = bookEntity.id!!,
+                title = bookEntity.title,
+                edition = bookEntity.edition,
+                pageCount = bookEntity.pageCount,
+                author = AuthorMapper.entityToAuthorShortDto(bookEntity.author!!)
             )
 
         fun shortPostDtoToEntity(newBookShortDto: NewBookShortDTO) =
-            BookEntity(null, newBookShortDto.title, newBookShortDto.edition, newBookShortDto.pageCount, null)
+            BookEntity(
+                id = null,
+                title = newBookShortDto.title,
+                edition = newBookShortDto.edition,
+                pageCount = newBookShortDto.pageCount,
+                author = null
+            )
 
         fun entityToBookShortDto(bookEntity: BookEntity) =
-            BookShortDTO(bookEntity.id!!, bookEntity.title, bookEntity.edition, bookEntity.pageCount)
+            BookShortDTO(
+                id = bookEntity.id!!,
+                title = bookEntity.title,
+                edition = bookEntity.edition,
+                pageCount = bookEntity.pageCount
+            )
 
-        fun updateDtoToEntity(updateBookDTO: UpdateBookDTO)=BookEntity(
-            null,
-            updateBookDTO.title,
-            updateBookDTO.edition,
-            updateBookDTO.pageCount,
-            null
+        fun updateDtoToEntity(updateBookDTO: UpdateBookDTO) = BookEntity(
+            id = null,
+            title = updateBookDTO.title,
+            edition = updateBookDTO.edition,
+            pageCount = updateBookDTO.pageCount,
+            author = null
         )
     }
 }

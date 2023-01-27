@@ -11,37 +11,38 @@ import org.springframework.stereotype.Component
 class AuthorMapper {
     companion object {
         fun entityToDto(authorEntity: AuthorEntity) = AuthorDTO(
-            authorEntity.id!!,
-            authorEntity.name,
-            authorEntity.lastName,
-            authorEntity.secondName,
-            authorEntity.birthDate,
-            authorEntity.books.map { BookMapper.entityToBookShortDto(it) }
+            id = authorEntity.id!!,
+            name = authorEntity.name,
+            lastName = authorEntity.lastName,
+            secondName = authorEntity.secondName,
+            birthDate = authorEntity.birthDate,
+            books = authorEntity.books.map { BookMapper.entityToBookShortDto(it) }
                 .toSet()
         )
 
         fun postDtoToEntity(newAuthorDTO: NewAuthorDTO) = AuthorEntity(
             id = null,
-            newAuthorDTO.name,
-            newAuthorDTO.secondName,
-            newAuthorDTO.lastName,
-            newAuthorDTO.birthDate,
+            name = newAuthorDTO.name,
+            secondName = newAuthorDTO.secondName,
+            lastName = newAuthorDTO.lastName,
+            birthDate = newAuthorDTO.birthDate,
             books = emptySet()
         )
 
         fun entityToAuthorShortDto(authorEntity: AuthorEntity) = AuthorShortDTO(
-            authorEntity.id!!,
-            authorEntity.name,
-            authorEntity.lastName,
-            authorEntity.secondName,
-            authorEntity.birthDate
+            id = authorEntity.id!!,
+            name=authorEntity.name,
+            lastName = authorEntity.lastName,
+            secondName = authorEntity.secondName,
+            birthDate = authorEntity.birthDate
         )
+
         fun updateDtoToEntity(authorUpdateDTO: AuthorUpdateDTO) = AuthorEntity(
             id = null,
-            authorUpdateDTO.name,
-            authorUpdateDTO.secondName,
-            authorUpdateDTO.lastName,
-            authorUpdateDTO.birthDate,
+            name=authorUpdateDTO.name,
+            secondName = authorUpdateDTO.secondName,
+            lastName = authorUpdateDTO.lastName,
+            birthDate = authorUpdateDTO.birthDate,
             books = emptySet()
         )
     }

@@ -6,6 +6,7 @@ import com.example.library2kotlin.model.dto.book.BookAuthorShortDTO
 import com.example.library2kotlin.model.dto.book.BookListDTO
 import com.example.library2kotlin.model.dto.book.NewBookShortDTO
 import com.example.library2kotlin.model.dto.book.UpdateBookDTO
+import com.example.library2kotlin.model.entity.AuthorEntity
 import com.example.library2kotlin.model.entity.BookEntity
 import com.example.library2kotlin.repository.AuthorRepository
 import com.example.library2kotlin.repository.BookRepository
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Service
 @Service
 class BookService(private val bookRepository: BookRepository, private val authorRepository: AuthorRepository) {
     fun postBook(newBookShortDTO: NewBookShortDTO): BookAuthorShortDTO {
-        val author = authorRepository.findById(newBookShortDTO.authorId)
+        val author: AuthorEntity = authorRepository.findById(newBookShortDTO.authorId)
             .orElseThrow { NoEntityException("No author with id=${newBookShortDTO.authorId}") }
-        val book = newBookShortDTO.let { BookMapper.shortPostDtoToEntity(it) }
+        val book: BookEntity = newBookShortDTO.let { BookMapper.shortPostDtoToEntity(it) }
         book.author = author
         return bookRepository.save(book).let { BookMapper.entityToBookGetDto(it) }
     }

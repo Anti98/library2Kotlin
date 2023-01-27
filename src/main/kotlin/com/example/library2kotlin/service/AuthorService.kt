@@ -16,16 +16,18 @@ class AuthorService(private val authorRepository: AuthorRepository) {
         authorRepository.findById(id).orElseThrow { NoEntityException("No author with id=$id") }
             .let { AuthorMapper.entityToDto(it) }
 
-    fun postAuthor(newAuthorDTO: NewAuthorDTO) =
-        authorRepository.save(newAuthorDTO.let { AuthorMapper.postDtoToEntity(it) })
-            .let { AuthorMapper.entityToDto(it) }
+    fun postAuthor(newAuthorDTO: NewAuthorDTO) {
+        val authorEntity: AuthorEntity = newAuthorDTO.let { AuthorMapper.postDtoToEntity(it) }
+        return authorRepository.save(authorEntity).let { AuthorMapper.entityToDto(it) }
+    }
 
     fun getAllAuthors() = AuthorListDTO(
         authorRepository.findAll().map(AuthorMapper::entityToDto)
     )
 
     fun deleteAuthorById(id: Long): AuthorDTO {
-        val author = authorRepository.findById(id).orElseThrow { NoEntityException("No author with id=$id") }
+        val author: AuthorEntity =
+            authorRepository.findById(id).orElseThrow { NoEntityException("No author with id=$id") }
         authorRepository.deleteById(id)
         return author.let { AuthorMapper.entityToDto(it) }
     }
